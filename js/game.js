@@ -26,8 +26,6 @@ window.onload = ()=>{
       }
     })
 
-    console.log(loadedImages)
-
     //Classes
     class Dragon {
         constructor(){
@@ -36,6 +34,10 @@ window.onload = ()=>{
             this.width = 145
             this.height = 105
             this.speedX = 0
+        }
+
+        updatePosition(){
+            this.x += this.speedX
         }
     }
 
@@ -46,12 +48,23 @@ window.onload = ()=>{
         startGame()
     }
 
+    document.addEventListener('keydown', (event)=>{
+        if(event.key === 'ArrowRight'){
+            player.speedX = 2.5
+        }
+        else if(event.key === 'ArrowLeft'){
+            player.speedX = -2.5
+        }
+    })
+
+    document.addEventListener('keyup', (event)=>{
+        if(event.key ===  'ArrowRight' || event.key === 'ArrowLeft') player.speedX = 0
+    })
+
     //Functions
     const startGame = ()=>{ //This function will start and run the logic of the game
-        // updateCanvas() //This function updates the position of every object in the game
-        // drawCanvas() //This function draws all the updated objects in the game
-        drawSky()
-        drawDragon()
+        updateCanvas() //This function updates the position of every object in the game
+        requestAnimationFrame(startGame)
     }
 
     const drawSky = ()=>{
@@ -62,8 +75,10 @@ window.onload = ()=>{
         ctx.drawImage(loadedImages.player, player.x, player.y, player.width, player.height)
     }
 
-    // const updateDragon = ()=>{
-    //     player.x += player.speedX
-    // }
+    const updateCanvas = ()=>{
+        drawSky()
+        drawDragon()
+        player.updatePosition()
+    }
 
 }
