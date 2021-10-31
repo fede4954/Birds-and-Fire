@@ -6,33 +6,36 @@ window.onload = ()=>{
     const ctx = canvas.getContext('2d')
 
     //Image load
-    // const loadedImages = {}
+    const loadedImages = {}
 
-    // const imageLinks = [
-    //  { link: " ", name: " " },
-    //  { link: " ", name: " " }
-    // ]
+    const imageLinks = [
+     { link: "./images/dragon.gif", name: "player" },
+     { link: "./images/skies/sky_night.png", name: "sky_night" }
+    ]
 
-    // let counterForLoadedImages = 0; //This counter keeps track of the images loaded
+    let counterForLoadedImages = 0; //This counter keeps track of the images loaded
 
-    // imageLinks.forEach((imagen) => {
-    //   //Iterate over every img in the array
-    //   const img = new Image() //Create a new img obejct
-    //   img.src = imagen.link //Give it the url of the img
-    //   img.onload = () => {
-    //     //Execute the callback function when it's loaded
-    //     counterForLoadedImages++ //Up the counter to check if it's done after
-    //     loadedImages[imagen.name] = img
-    //   }
-    // })
+    imageLinks.forEach((imagen) => {
+      //Iterate over every img in the array
+      const img = new Image() //Create a new img obejct
+      img.src = imagen.link //Give it the url of the img
+      img.onload = () => {
+        //Execute the callback function when it's loaded
+        counterForLoadedImages++ //Up the counter to check if it's done after
+        loadedImages[imagen.name] = img
+      }
+    })
+
+    console.log(loadedImages)
 
     //Classes
     class Dragon {
         constructor(){
-            this.x = 0
-            this.y = 0
-            // this.width =
-            // this.height =
+            this.x = 177.5 //Dragon starter position is always the same
+            this.y = 895
+            this.width = 145
+            this.height = 105
+            this.speedX = 0
         }
     }
 
@@ -47,21 +50,20 @@ window.onload = ()=>{
     const startGame = ()=>{ //This function will start and run the logic of the game
         // updateCanvas() //This function updates the position of every object in the game
         // drawCanvas() //This function draws all the updated objects in the game
-        drawRoad()
+        drawSky()
         drawDragon()
     }
 
-    const drawRoad = ()=>{
-        const road = new Image()
-        road.src = './images/skies/sky_night.png'
-        ctx.drawImage(road, 0, 0, 500, 1000)
+    const drawSky = ()=>{
+        ctx.drawImage(loadedImages.sky_night, 0, 0, 500, 1000)
     }
 
     const drawDragon = ()=>{
-        const player = new Image()
-        player.src = './images/dragon.gif' //Gif doesn't work must animate later manually
-        ctx.drawImage(player, 0, 0, 145, 105)
+        ctx.drawImage(loadedImages.player, player.x, player.y, player.width, player.height)
     }
 
+    // const updateDragon = ()=>{
+    //     player.x += player.speedX
+    // }
 
 }
