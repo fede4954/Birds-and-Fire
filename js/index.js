@@ -37,16 +37,28 @@ window.onload = ()=>{
     }
 
     document.addEventListener('keydown', (event)=>{
+        //Horizontal movement
         if(event.key === 'ArrowRight'){
             player.speedX = 2.5
         }
         else if(event.key === 'ArrowLeft'){
             player.speedX = -2.5
         }
+
+        //Vertical movement
+        if(event.key === 'ArrowDown'){
+            player.speedY = 2.5
+        }
+        else if(event.key === 'ArrowUp'){
+            player.speedY = -2.5
+        }
+
     })
 
     document.addEventListener('keyup', (event)=>{
         if(event.key ===  'ArrowRight' || event.key === 'ArrowLeft') player.speedX = 0
+
+        if(event.key ===  'ArrowDown' || event.key === 'ArrowUp') player.speedY = 0
     })
 
 

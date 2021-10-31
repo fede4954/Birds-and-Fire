@@ -5,16 +5,21 @@ class Dragon {
         this.width = 145
         this.height = 105
         this.speedX = 0
+        this.speedY = 0
     }
 
     updatePosition(){
+        //Update pos with speed
         this.x += this.speedX
-        console.log(this.x)
+        this.y += this.speedY
         this.checkIfInBoundaries()
     }
 
-    checkIfInBoundaries(){
-        if(this.x > 360) this.x = 360
+    checkIfInBoundaries(){ //Check if the dragon is still inside the boundaries, force it to be if it isnt'
+        if(this.x > 355) this.x = 355
         else if(this.x < 0) this.x = 0
+
+        if(this.y < 140) this.y = 140
+        else if(this.y > 895) this.y = 895
     }
 }
