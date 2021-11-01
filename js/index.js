@@ -17,6 +17,9 @@ const ctx = canvas.getContext("2d")
 const player = new Dragon()
 let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
 let arrayOfEnemies = [] //Holds the enemies
+// const testEnemy = new Enemy()
+// let arrayOfEnemies = []
+// arrayOfEnemies.push(testEnemy)
 
 
 
@@ -61,11 +64,21 @@ const drawEnemies = () => {
     })
 }
 
+const isEnemyShot = () => {
+    arrayOfEnemies.forEach((enemy) => {
+        arrayOfFireballs.forEach((fireball) => {
+            if (!(enemy.x > fireball.x + fireball.width || enemy.x + enemy.width < fireball.x ||
+                enemy.y > fireball.y + fireball.height || enemy.y + enemy.height < fireball.y)) enemy.toDelete = true
+        })
+    })
+}
+
 const updateCanvas = () => {
     drawSky()
     drawDragon()
     drawFireballs()
     drawEnemies()
+    isEnemyShot()
 
     arrayOfFireballs = arrayOfFireballs.filter((fireball) => {
         //Delete fireballs that have exited the canvas
@@ -73,7 +86,7 @@ const updateCanvas = () => {
     })
 
     arrayOfEnemies = arrayOfEnemies.filter((enemy) => {
-        //Delete enemies that have exited the canvas
+        //Delete enemies that have exited the canvas or been shot
         return !enemy.toDelete
     })
 
@@ -84,11 +97,12 @@ const updateCanvas = () => {
 
 
 
+
 //window onload -> eventListeners
 window.onload = () => {
     loadImages()
 
-    //Start game button
+    // Start game button
     document.getElementById("start-game").onclick = () => {
         startGame()
         const createEnemies = setInterval(()=>{

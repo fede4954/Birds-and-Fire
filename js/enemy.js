@@ -1,7 +1,7 @@
 class Enemy {
     constructor(){
-        this.x = Math.floor(Math.random() * 501) //Spawn throughout the entire x axis
-        this.y = Math.floor(Math.random() * 141) //Spawn down to px 140 in y
+        this.x = Math.floor(Math.random() * 501) //Spawn throughout the entire x axis 
+        this.y = Math.floor(Math.random() * 141) //Spawn down to px 140 in y 
         this.width = 50
         this.height = 50
         this.speedX = 2
