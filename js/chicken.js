@@ -1,4 +1,4 @@
-class Enemy {
+class Chicken {
     constructor(){
         this.x = Math.floor(Math.random() * 501) //Spawn throughout the entire x axis 
         this.y = Math.floor(Math.random() * 141) //Spawn down to px 140 in y 
@@ -20,10 +20,10 @@ class Enemy {
         this.checkIfInBoundaries()
     }
 
-    checkIfInBoundaries(){ //Checks if the enemy is still inside the boundaries, forces it to be if it isn't
+    checkIfInBoundaries(){ //Checks if the chicken is still inside the boundaries, forces it to be if it isn't
         if(this.x > 500) this.x = 500
         else if(this.x < 0) this.x = 0
 
-        if(this.y > 1000) this.toDelete = true //If the enemy exits the screen through the bottom 
+        if(this.y > 1000) this.toDelete = true //If the chicken exits the screen through the bottom 
     }                                          //flag it for deletion to free memory
 }

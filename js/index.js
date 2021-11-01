@@ -2,16 +2,16 @@
 const loadedImages = {}
 
 const imageLinks = [
-    { link: "./images/dragon.gif", name: "player" },
-    { link: "./images/skies/sky_night.png", name: "sky_night" },
-    { link: "./images/fireball/fireball.png", name: "fireball" }
+    { link: './images/dragon.gif', name: 'player' },
+    { link: './images/skies/sky_night.png', name: 'sky_night' },
+    { link: './images/fireball.png', name: 'fireball' }
 ]
 
 // let counterForLoadedImages = 0 //This counter keeps track of the images loaded
 
 //Create canvas 2d context
-const canvas = document.getElementById("game")
-const ctx = canvas.getContext("2d")
+const canvas = document.getElementById('game')
+const ctx = canvas.getContext('2d')
 ctx.fillStyle = "#FF0000"; //Provisional red color for enemies
 
 //Player variables
@@ -65,8 +65,10 @@ const drawEnemies = () => {
 const isEnemyShot = () => {
     arrayOfEnemies.forEach((enemy) => {
         arrayOfFireballs.forEach((fireball) => {
-            if (!(enemy.x > fireball.x + fireball.width || enemy.x + enemy.width < fireball.x ||
-                enemy.y > fireball.y + fireball.height || enemy.y + enemy.height < fireball.y)) enemy.toDelete = true
+            if (!(enemy.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
+                enemy.x + enemy.width < fireball.x || 
+                enemy.y > fireball.y + fireball.height || 
+                enemy.y + enemy.height < fireball.y)) enemy.toDelete = true 
         })
     })
 }
@@ -101,39 +103,39 @@ window.onload = () => {
     loadImages()
 
     // Start game button
-    document.getElementById("start-game").onclick = () => {
+    document.getElementById('start-game').onclick = () => {
         startGame()
         const createEnemies = setInterval(()=>{
-            arrayOfEnemies.push(new Enemy())
+            arrayOfEnemies.push(new Chicken())
           }, 1000) //Create new enemy every second
     }
 
     //Dragon movement
     document.addEventListener("keydown", (event) => {
         //Horizontal movement
-        if (event.key === "ArrowRight") {
+        if (event.key === 'ArrowRight') {
             player.speedX = 2
-        } else if (event.key === "ArrowLeft") {
+        } else if (event.key === 'ArrowLeft') {
             player.speedX = -2
         }
 
         //Vertical movement
-        else if (event.key === "ArrowDown") {
+        else if (event.key === 'ArrowDown') {
             player.speedY = 1
-        } else if (event.key === "ArrowUp") {
+        } else if (event.key === 'ArrowUp') {
             player.speedY = -1
         }
     })
 
-    document.addEventListener("keyup", (event) => {
-        if (event.key === "ArrowRight" || event.key === "ArrowLeft")
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft')
             player.speedX = 0
 
-        if (event.key === "ArrowDown" || event.key === "ArrowUp") player.speedY = 0
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') player.speedY = 0
     })
 
     //Shooting
     document.addEventListener("keydown", (event) => {
-        if (event.key === "q") arrayOfFireballs.push(new Fireball(player.x + 56.5, player.y - 20))
+        if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 56.5, player.y - 20))
     })
 }
