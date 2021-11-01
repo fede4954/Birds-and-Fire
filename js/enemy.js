@@ -10,7 +10,12 @@ class Enemy {
     }
 
     updatePosition(){
-        this.x += Math.floor(Math.random() * 4 - 2) //X axis movement
+        if((Math.floor(Math.random() * 5) < 3)){
+            this.x += Math.floor(Math.random() * 5)
+        }
+        else {
+            this.x += Math.floor(Math.random() * -5)
+        }
         this.y += this.speedY
         this.checkIfInBoundaries()
     }

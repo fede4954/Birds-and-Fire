@@ -56,7 +56,7 @@ const drawFireballs = () => {
 
 const drawEnemies = () => {
     arrayOfEnemies.forEach((enemy) => {
-        ctx.drawImage(loadedImages.fireball, enemy.x, enemy.y, enemy.width, enemy.height)
+        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height)
         enemy.updatePosition() 
     })
 }
@@ -70,6 +70,11 @@ const updateCanvas = () => {
     arrayOfFireballs = arrayOfFireballs.filter((fireball) => {
         //Delete fireballs that have exited the canvas
         return !fireball.toDelete
+    })
+
+    arrayOfEnemies = arrayOfEnemies.filter((enemy) => {
+        //Delete enemies that have exited the canvas
+        return !enemy.toDelete
     })
 
     requestAnimationFrame(updateCanvas) //Infinite loop
@@ -88,8 +93,7 @@ window.onload = () => {
         startGame()
         const createEnemies = setInterval(()=>{
             arrayOfEnemies.push(new Enemy())
-            console.log(arrayOfEnemies)
-          }, 1000)
+          }, 1000) //Create new enemy every second
     }
 
     //Dragon movement
