@@ -4,7 +4,7 @@ const loadedImages = {}
 const imageLinks = [
     { link: "./images/dragon.gif", name: "player" },
     { link: "./images/skies/sky_night.png", name: "sky_night" },
-    { link: "./images/fireballs/red_fireball.png", name: "red_fireball" }
+    { link: "./images/fireball/fireball.png", name: "fireball" }
 ]
 
 // let counterForLoadedImages = 0 //This counter keeps track of the images loaded
@@ -16,7 +16,7 @@ const ctx = canvas.getContext("2d")
 //Player variables
 const player = new Dragon()
 let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
-// let shooting = false
+let arrayOfEnemies = [] //Holds the enemies
 
 
 
@@ -39,18 +39,25 @@ const startGame = () => {
 }
 
 const drawSky = () => {
-    ctx.drawImage(loadedImages.sky_night, 0, 0, 500, 1000);
+    ctx.drawImage(loadedImages.sky_night, 0, 0, 500, 1000)
 }
 
 const drawDragon = () => {
     ctx.drawImage(loadedImages.player, player.x, player.y, player.width, player.height)
-    player.updatePosition() //Update pos before drawing
+    player.updatePosition() //Update pos for next draw
 }
 
 const drawFireballs = () => {
     arrayOfFireballs.forEach((fireball) => {
-        ctx.drawImage(loadedImages.red_fireball, fireball.x, fireball.y, fireball.width, fireball.height)
-        fireball.updatePosition() //Update fireball pos before drawing
+        ctx.drawImage(loadedImages.fireball, fireball.x, fireball.y, fireball.width, fireball.height)
+        fireball.updatePosition() 
+    })
+}
+
+const drawEnemies = () => {
+    arrayOfEnemies.forEach((enemy) => {
+        ctx.drawImage(loadedImages.fireball, enemy.x, enemy.y, enemy.width, enemy.height)
+        enemy.updatePosition() 
     })
 }
 
@@ -58,15 +65,15 @@ const updateCanvas = () => {
     drawSky()
     drawDragon()
     drawFireballs()
+    drawEnemies()
 
     arrayOfFireballs = arrayOfFireballs.filter((fireball) => {
-        //Filter fireballs that have exited the canvas
+        //Delete fireballs that have exited the canvas
         return !fireball.toDelete
     })
 
     requestAnimationFrame(updateCanvas) //Infinite loop
 }
-
 
 
 
@@ -79,6 +86,10 @@ window.onload = () => {
     //Start game button
     document.getElementById("start-game").onclick = () => {
         startGame()
+        const createEnemies = setInterval(()=>{
+            arrayOfEnemies.push(new Enemy())
+            console.log(arrayOfEnemies)
+          }, 1000)
     }
 
     //Dragon movement
@@ -107,8 +118,6 @@ window.onload = () => {
 
     //Shooting
     document.addEventListener("keydown", (event) => {
-        if (event.key === "q") {
-            arrayOfFireballs.push(new Fireball(player.x, player.y))
-        }
+        if (event.key === "q") arrayOfFireballs.push(new Fireball(player.x + 56.5, player.y - 20))
     })
 }
