@@ -12,14 +12,12 @@ const imageLinks = [
 //Create canvas 2d context
 const canvas = document.getElementById("game")
 const ctx = canvas.getContext("2d")
+ctx.fillStyle = "#FF0000"; //Provisional red color for enemies
 
 //Player variables
 const player = new Dragon()
 let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
 let arrayOfEnemies = [] //Holds the enemies
-// const testEnemy = new Enemy()
-// let arrayOfEnemies = []
-// arrayOfEnemies.push(testEnemy)
 
 
 
@@ -121,9 +119,9 @@ window.onload = () => {
 
         //Vertical movement
         else if (event.key === "ArrowDown") {
-            player.speedY = 2
+            player.speedY = 1
         } else if (event.key === "ArrowUp") {
-            player.speedY = -2
+            player.speedY = -1
         }
     })
 

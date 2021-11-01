@@ -4,7 +4,7 @@ class Fireball {
         this.y = y
         this.width = 32
         this.height = 32
-        this.speedY = 1
+        this.speedY = 1.5
         this.toDelete = false
     }
 
