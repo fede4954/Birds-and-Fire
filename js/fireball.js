@@ -11,7 +11,6 @@ class Fireball {
     updatePosition(){ //Fireball only moves in the y axis
         this.y -= this.speedY
         this.checkIfInBoundaries()
-        console.log(this.speedY)
     }
 
     checkIfInBoundaries(){
