@@ -68,7 +68,10 @@ const isEnemyShot = () => {
             if (!(enemy.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
                 enemy.x + enemy.width < fireball.x || 
                 enemy.y > fireball.y + fireball.height || 
-                enemy.y + enemy.height < fireball.y)) enemy.toDelete = true 
+                enemy.y + enemy.height < fireball.y)){
+                    enemy.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
+                    fireball.toDelete = true
+                }
         })
     })
 }
