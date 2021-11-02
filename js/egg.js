@@ -5,7 +5,7 @@ class Egg {
         this.width = 32
         this.height = 32
         this.speedY = 4
-        this.toDelete = false
+        this.hit = false
     }
 
     updatePosition(){
@@ -14,6 +14,6 @@ class Egg {
     }
 
     checkIfInBoundaries(){
-        if(this.y < 0) this.toDelete = true //Flag egg for deletion if it has exited the canvas
+        if(this.y < 0) this.hit = true
     }
 }

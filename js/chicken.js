@@ -6,11 +6,11 @@ class Chicken {
         this.height = 50
         this.speedX = 2
         this.speedY = 2
-        this.toDelete = false
+        this.hit = false
     }
 
     updatePosition(){
-        if((Math.floor(Math.random() * 5) < 3)){
+        if((Math.floor(Math.random() * 5) < 3)){ //Chicken's move randomly from side to side in the x axis
             this.x += Math.floor(Math.random() * 5)
         }
         else {
@@ -20,10 +20,10 @@ class Chicken {
         this.checkIfInBoundaries()
     }
 
-    checkIfInBoundaries(){ //Checks if the chicken is still inside the boundaries, forces it to be if it isn't
+    checkIfInBoundaries(){ 
         if(this.x > 500) this.x = 500
         else if(this.x < 0) this.x = 0
 
-        if(this.y > 1000) this.toDelete = true //If the chicken exits the screen through the bottom 
-    }                                          //flag it for deletion to free memory
+        if(this.y > 1000) this.hit = true 
+    }                                     
 }

@@ -4,7 +4,9 @@ const loadedImages = {}
 const imageLinks = [
     { link: './images/dragon.gif', name: 'player' },
     { link: './images/skies/sky_night.png', name: 'sky_night' },
-    { link: './images/fireball.png', name: 'fireball' }
+    { link: './images/fireball.png', name: 'fireball' },
+    { link: './images/egg.png', name: 'egg'}
+    // { link: '', name: ''}
 ]
 
 // let counterForLoadedImages = 0 //This counter keeps track of the images loaded
@@ -49,13 +51,6 @@ const drawDragon = () => {
     player.updatePosition() //Update pos for next draw
 }
 
-const drawFireballs = () => {
-    arrayOfFireballs.forEach((fireball) => {
-        ctx.drawImage(loadedImages.fireball, fireball.x, fireball.y, fireball.width, fireball.height)
-        fireball.updatePosition() 
-    })
-}
-
 const drawChickens = () => {
     arrayOfChickens.forEach((chicken) => {
         ctx.fillRect(chicken.x, chicken.y, chicken.width, chicken.height)
@@ -63,68 +58,63 @@ const drawChickens = () => {
     })
 }
 
-const drawEggs = () => {
-    arrayOfEggs.forEach((egg) => {
-        ctx.fillRect(egg.x, egg.y, egg.width, egg.height)
-        egg.updatePosition()
+const drawEntities = (arr, img) => { //Draws all entities from an array, img refers to the image inside loadedImages
+    arr.forEach((item) => {
+        ctx.drawImage(img, item.x, item.y, item.width, item.height)
+        item.updatePosition()
     })
 }
 
-const isEnemyShot = () => {
-    arrayOfChickens.forEach((chicken) => {
-        arrayOfFireballs.forEach((fireball) => {
-            if (!(chicken.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
-                chicken.x + chicken.width < fireball.x || 
-                chicken.y > fireball.y + fireball.height || 
-                chicken.y + chicken.height < fireball.y)){
-                    chicken.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
-                    fireball.toDelete = true
+const checkCollision = (arr1, arr2) => { //This function checks the collision between two types of entities 
+    arr1.forEach((item1) => { //Ex if array1 is eggs it'd check for every egg if any of the fireballs collide with it
+        arr2.forEach((item2) => {
+            if (!(item1.x > item2.x + item2.width || 
+                item1.x + item1.width < item2.x || 
+                item1.y > item2.y + item2.height || 
+                item1.y + item1.height < item2.y)){
+                    item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
+                    item2.hit = true //and the fireball (item2) aswell
                 }
         })
     })
 }
 
-const isEggShot = () => {
-    arrayOfEggs.forEach((egg) => {
-        arrayOfFireballs.forEach((fireball) => {
-            if (!(egg.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
-                egg.x + egg.width < fireball.x || 
-                egg.y > fireball.y + fireball.height || 
-                egg.y + egg.height < fireball.y)){
-                    egg.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
-                    fireball.toDelete = true
-                }
-        })
+const filterEntities = (arr) => { //This function filters all entities from an array that have been hit or exited the canvas
+    return arr.filter((item) => {
+        return !item.hit
     })
 }
 
+const drawAllEntities = () => { //Draws all entities except the player's dragon
+    drawEntities(arrayOfFireballs, loadedImages.fireball)
+    drawChickens()
+    drawEntities(arrayOfEggs, loadedImages.egg)
+}
+
+const checkAllCollisions = () => { //Checks all the collisions
+    checkCollision(arrayOfChickens, arrayOfFireballs)
+    checkCollision(arrayOfEggs, arrayOfFireballs)
+}
+
+const filterAllEntities = () => { //Filter all the entities flagged as hit
+    arrayOfFireballs = filterEntities(arrayOfFireballs)
+    arrayOfChickens = filterEntities(arrayOfChickens)
+    arrayOfEggs = filterEntities(arrayOfEggs)
+}
+
+
+
+
+
+//INFINITE GAME LOOP
 const updateCanvas = () => {
     drawSky()
     drawDragon()
-    drawFireballs()
-    drawChickens()
-    drawEggs()
-    isEnemyShot()
-    isEggShot()
-
-    arrayOfFireballs = arrayOfFireballs.filter((fireball) => {
-        //Delete fireballs that have exited the canvas
-        return !fireball.toDelete
-    })
-
-    arrayOfChickens = arrayOfChickens.filter((chicken) => {
-        //Delete chickens that have exited the canvas or been shot
-        return !chicken.toDelete
-    })
-
-    arrayOfEggs = arrayOfEggs.filter((egg) => {
-        //Delete eggs that have exited the canvas or been shot
-        return !egg.toDelete
-    })
-
-    requestAnimationFrame(updateCanvas) //Infinite loop
+    drawAllEntities()
+    checkAllCollisions()
+    filterAllEntities()
+    requestAnimationFrame(updateCanvas)
 }
-
 
 
 
@@ -146,7 +136,6 @@ window.onload = () => {
             let randomChicken = arrayOfChickens[Math.floor(Math.random() * arrayOfChickens.length)]
             const egg = new Egg(randomChicken.x, randomChicken.y) //Create new egg using random chicken's pos
             arrayOfEggs.push(egg)
-            console.log(arrayOfEggs)
         }, 1000) //This interval generates a new egg to be shot from a random chicken every second
 
 
