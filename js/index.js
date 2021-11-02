@@ -12,12 +12,13 @@ const imageLinks = [
 //Create canvas 2d context
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
-ctx.fillStyle = "#FF0000"; //Provisional red color for enemies
+ctx.fillStyle = "#FF0000"; //Provisional red color for chickens and eggs
 
 //Player variables
 const player = new Dragon()
 let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
-let arrayOfEnemies = [] //Holds the enemies
+let arrayOfChickens = [] //Holds the chickens
+let arrayOfEggs = [] //Holds the chickens' projectiles (eggs)
 
 
 
@@ -36,7 +37,7 @@ const loadImages = () => {
 }
 
 const startGame = () => {
-    updateCanvas() //Update canvas
+    updateCanvas() //Update canvas when start button is pressed
 }
 
 const drawSky = () => {
@@ -55,21 +56,42 @@ const drawFireballs = () => {
     })
 }
 
-const drawEnemies = () => {
-    arrayOfEnemies.forEach((enemy) => {
-        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height)
-        enemy.updatePosition() 
+const drawChickens = () => {
+    arrayOfChickens.forEach((chicken) => {
+        ctx.fillRect(chicken.x, chicken.y, chicken.width, chicken.height)
+        chicken.updatePosition() 
+    })
+}
+
+const drawEggs = () => {
+    arrayOfEggs.forEach((egg) => {
+        ctx.fillRect(egg.x, egg.y, egg.width, egg.height)
+        egg.updatePosition()
     })
 }
 
 const isEnemyShot = () => {
-    arrayOfEnemies.forEach((enemy) => {
+    arrayOfChickens.forEach((chicken) => {
         arrayOfFireballs.forEach((fireball) => {
-            if (!(enemy.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
-                enemy.x + enemy.width < fireball.x || 
-                enemy.y > fireball.y + fireball.height || 
-                enemy.y + enemy.height < fireball.y)){
-                    enemy.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
+            if (!(chicken.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
+                chicken.x + chicken.width < fireball.x || 
+                chicken.y > fireball.y + fireball.height || 
+                chicken.y + chicken.height < fireball.y)){
+                    chicken.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
+                    fireball.toDelete = true
+                }
+        })
+    })
+}
+
+const isEggShot = () => {
+    arrayOfEggs.forEach((egg) => {
+        arrayOfFireballs.forEach((fireball) => {
+            if (!(egg.x > fireball.x + fireball.width || //Check if fireball is inside the enemy
+                egg.x + egg.width < fireball.x || 
+                egg.y > fireball.y + fireball.height || 
+                egg.y + egg.height < fireball.y)){
+                    egg.toDelete = true //Mark the enemy and the fireball to be deleted once they collide
                     fireball.toDelete = true
                 }
         })
@@ -80,17 +102,24 @@ const updateCanvas = () => {
     drawSky()
     drawDragon()
     drawFireballs()
-    drawEnemies()
+    drawChickens()
+    drawEggs()
     isEnemyShot()
+    isEggShot()
 
     arrayOfFireballs = arrayOfFireballs.filter((fireball) => {
         //Delete fireballs that have exited the canvas
         return !fireball.toDelete
     })
 
-    arrayOfEnemies = arrayOfEnemies.filter((enemy) => {
-        //Delete enemies that have exited the canvas or been shot
-        return !enemy.toDelete
+    arrayOfChickens = arrayOfChickens.filter((chicken) => {
+        //Delete chickens that have exited the canvas or been shot
+        return !chicken.toDelete
+    })
+
+    arrayOfEggs = arrayOfEggs.filter((egg) => {
+        //Delete eggs that have exited the canvas or been shot
+        return !egg.toDelete
     })
 
     requestAnimationFrame(updateCanvas) //Infinite loop
@@ -108,9 +137,19 @@ window.onload = () => {
     // Start game button
     document.getElementById('start-game').onclick = () => {
         startGame()
-        const createEnemies = setInterval(()=>{
-            arrayOfEnemies.push(new Chicken())
-          }, 1000) //Create new enemy every second
+
+        const createChickens = setInterval(() => {
+            arrayOfChickens.push(new Chicken())
+          }, 1000) //Create new chicken every second
+
+        const generateEggs = setInterval(() => {
+            let randomChicken = arrayOfChickens[Math.floor(Math.random() * arrayOfChickens.length)]
+            const egg = new Egg(randomChicken.x, randomChicken.y) //Create new egg using random chicken's pos
+            arrayOfEggs.push(egg)
+            console.log(arrayOfEggs)
+        }, 1000) //This interval generates a new egg to be shot from a random chicken every second
+
+
     }
 
     //Dragon movement

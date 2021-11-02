@@ -4,13 +4,13 @@ class Egg {
         this.y = y
         this.width = 32
         this.height = 32
-        this.speedY = 1.5
+        this.speedY = 4
         this.toDelete = false
     }
 
     updatePosition(){
         this.y += this.speedY
-        checkIfInBoundaries()
+        this.checkIfInBoundaries()
     }
 
     checkIfInBoundaries(){
