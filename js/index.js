@@ -3,7 +3,10 @@ const loadedImages = {}
 
 const imageLinks = [
     { link: './images/dragon.gif', name: 'player' },
-    { link: './images/skies/sky_night.png', name: 'sky_night' },
+    // { link: './images/skies/sky1.png', name: 'sky1' },
+    // { link: './images/skies/sky2.png', name: 'sky2' },
+    // { link: './images/skies/sky3.png', name: 'sky3' },
+    { link: './images/skies/sky4.png', name: 'sky4' },
     { link: './images/fireball.png', name: 'fireball' },
     { link: './images/egg.png', name: 'egg'},
     { link: './images/seagulls.png', name: 'seagulls'}
@@ -15,7 +18,6 @@ const imageLinks = [
 //Create canvas 2d context
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
-ctx.fillStyle = "#FF0000"; //Provisional red color for seagulls
 
 //Player variables
 const player = new Dragon()
@@ -45,7 +47,7 @@ const startGame = () => {
 }
 
 const drawSky = () => {
-    ctx.drawImage(loadedImages.sky_night, 0, 0, 500, 1000)
+    ctx.drawImage(loadedImages.sky4, 0, 0, 700, 700)
 }
 
 const drawDragon = () => {
@@ -125,13 +127,13 @@ window.onload = () => {
 
         const createSeagulls = setInterval(() => {
             arrayOfSeagulls.push(new Seagulls())
-          }, 1000) //Create new seagulls every second
+          }, 500) //Create new seagulls every second
 
         const generateEggs = setInterval(() => {
             let randomSeagulls = arrayOfSeagulls[Math.floor(Math.random() * arrayOfSeagulls.length)]
-            const egg = new Egg(randomSeagulls.x, randomSeagulls.y) //Create new egg using random seagulls' pos
+            const egg = new Egg(randomSeagulls.x + 36, randomSeagulls.y) //Create new egg using random seagulls' pos
             arrayOfEggs.push(egg)
-        }, 1000) //This interval generates a new egg to be shot from random seagulls every second
+        }, 250) //This interval generates a new egg to be shot from random seagulls every half a second
 
 
     }
@@ -140,16 +142,16 @@ window.onload = () => {
     document.addEventListener("keydown", (event) => {
         //Horizontal movement
         if (event.key === 'ArrowRight') {
-            player.speedX = 2
+            player.speedX = 3
         } else if (event.key === 'ArrowLeft') {
-            player.speedX = -2
+            player.speedX = -3
         }
 
         //Vertical movement
         else if (event.key === 'ArrowDown') {
-            player.speedY = 1
+            player.speedY = 1.5
         } else if (event.key === 'ArrowUp') {
-            player.speedY = -1
+            player.speedY = -1.5
         }
     })
 
@@ -162,6 +164,6 @@ window.onload = () => {
 
     //Shooting
     document.addEventListener("keydown", (event) => {
-        if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 56.5, player.y - 20))
+        if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 53.25, player.y - 20))
     })
 }

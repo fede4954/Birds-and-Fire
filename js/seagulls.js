@@ -1,7 +1,7 @@
 class Seagulls {
     constructor(){
-        this.x = Math.floor(Math.random() * 501) //Spawn throughout the entire x axis 
-        this.y = Math.floor(Math.random() * 141) //Spawn down to px 140 in y 
+        this.x = Math.floor(Math.random() * 701) //Spawn throughout the entire x axis 
+        this.y = Math.floor(Math.random() * 146) //Spawn down to px 140 in y 
         this.width = 96
         this.height = 24
         this.speedX = 2
@@ -12,10 +12,10 @@ class Seagulls {
 
     updatePosition(){
         if((Math.floor(Math.random() * 5) < 3)){ //Chicken's move randomly from side to side in the x axis
-            this.x += Math.floor(Math.random() * 5)
+            this.x += Math.floor(Math.random() * 2)
         }
         else {
-            this.x += Math.floor(Math.random() * -5)
+            this.x += Math.floor(Math.random() * -2)
         }
         this.y += this.speedY
         this.checkIfInBoundaries()
