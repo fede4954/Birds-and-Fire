@@ -6,6 +6,7 @@ class Egg {
         this.height = 32
         this.speedY = 4
         this.hit = false
+        this.egg = true //Variable used to calc score
     }
 
     updatePosition(){

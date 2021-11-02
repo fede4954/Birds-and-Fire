@@ -1,12 +1,13 @@
-class Chicken {
+class Seagulls {
     constructor(){
         this.x = Math.floor(Math.random() * 501) //Spawn throughout the entire x axis 
         this.y = Math.floor(Math.random() * 141) //Spawn down to px 140 in y 
-        this.width = 50
-        this.height = 50
+        this.width = 96
+        this.height = 24
         this.speedX = 2
         this.speedY = 2
         this.hit = false
+        this.chicken = true //Variable used to calc score
     }
 
     updatePosition(){
