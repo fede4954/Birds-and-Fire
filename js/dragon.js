@@ -10,8 +10,7 @@ class Dragon {
     }
 
     updatePosition(){
-        //Update pos with speed
-        this.x += this.speedX
+        this.x += this.speedX //Update pos with speed
         this.y += this.speedY
         this.checkIfInBoundaries()
     }
