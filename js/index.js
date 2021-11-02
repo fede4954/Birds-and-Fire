@@ -13,7 +13,7 @@ const imageLinks = [
     // { link: '', name: ''}
 ]
 
-// let counterForLoadedImages = 0 //This counter keeps track of the images loaded
+let counterForLoadedImages = 0 //This counter keeps track of the images loaded
 
 //Create canvas 2d context
 const canvas = document.getElementById('game')
@@ -36,7 +36,7 @@ const loadImages = () => {
         const img = new Image() //Create a new img obejct
         img.src = image.link //Give it the url of the img
         img.onload = () => { //Execute the callback function when it's loaded
-            // counterForLoadedImages++ //Up the counter to check if it's done after
+            counterForLoadedImages++ //Up the counter to check if it's done after
             loadedImages[image.name] = img
         }
     })
@@ -71,6 +71,7 @@ const checkCollision = (arr1, arr2) => { //This function checks the collision be
                 item1.y + item1.height < item2.y)){
                     item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
                     item2.hit = true //and the fireball (item2) aswell
+                    if(item1.name === 'seagulls') score += 30 //If the item hit is a seagull, up the score
                 }
         })
     })
@@ -105,12 +106,14 @@ const filterAllEntities = () => { //Filter all the entities flagged as hit
 
 //INFINITE GAME LOOP
 const updateCanvas = () => {
-    drawSky()
-    drawDragon()
-    drawAllEntities()
-    checkAllCollisions()
-    filterAllEntities()
-    requestAnimationFrame(updateCanvas)
+    if(counterForLoadedImages === imageLinks.length){ //Only update canvas once all images are loaded
+        drawSky()
+        drawDragon()
+        drawAllEntities()
+        checkAllCollisions()
+        filterAllEntities()
+        requestAnimationFrame(updateCanvas)
+    }
 }
 
 
@@ -164,6 +167,6 @@ window.onload = () => {
 
     //Shooting
     document.addEventListener("keydown", (event) => {
-        if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 53.25, player.y - 20))
+        if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 53.25, player.y - 20)) //Pos from the dragon's mouth
     })
 }

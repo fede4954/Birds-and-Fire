@@ -7,11 +7,11 @@ class Seagulls {
         this.speedX = 2
         this.speedY = 2
         this.hit = false
-        this.chicken = true //Variable used to calc score
+        this.name = 'seagulls' //Property used to calc the score when checking collisions
     }
 
     updatePosition(){
-        if((Math.floor(Math.random() * 5) < 3)){ //Chicken's move randomly from side to side in the x axis
+        if((Math.floor(Math.random() * 5) < 3)){ //Seagull's move randomly from side to side in the x axis
             this.x += Math.floor(Math.random() * 2)
         }
         else {

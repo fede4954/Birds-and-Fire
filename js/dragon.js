@@ -6,7 +6,8 @@ class Dragon {
         this.height = 94.5
         this.speedX = 0
         this.speedY = 0
-        this.health = 100
+        this.alive = true
+        this.name = 'dragon'
     }
 
     updatePosition(){

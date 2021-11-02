@@ -5,7 +5,8 @@ class Fireball {
         this.width = 24
         this.height = 24
         this.speedY = 3
-        this.hit = false //In every class this flag has more or less the same behavior, if an entity is hit, it'll be flagged
+        this.hit = false 
+        this.name = 'fireball' //In every class this flag has more or less the same behavior, if an entity is hit, it'll be flagged
     }                    //for deletion, entity also will be marked as hit when the object exits the boundaries even if it isn't
                          //technically hit as the purpose of the flag is deletion
     updatePosition(){

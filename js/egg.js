@@ -6,7 +6,7 @@ class Egg {
         this.height = 24
         this.speedY = 3
         this.hit = false
-        this.egg = true //Variable used to calc score
+        this.name = 'egg'
     }
 
     updatePosition(){
