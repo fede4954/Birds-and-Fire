@@ -7,6 +7,8 @@ const imageLinks = [
     { link: './images/skies/sky2.png', name: 'sky2' },
     { link: './images/skies/sky3.png', name: 'sky3' },
     { link: './images/skies/sky4.png', name: 'sky4' },
+    { link: './images/skies/sky5.png', name: 'sky5' },
+    { link: './images/skies/sky6.png', name: 'sky6' },
     { link: './images/fireball.png', name: 'fireball' },
     { link: './images/egg.png', name: 'egg'},
     { link: './images/seagulls.png', name: 'seagulls'}
@@ -56,7 +58,8 @@ const createBackgrounds = () => {
     arrayOfBackgrounds.push(new Background(-700))
     arrayOfBackgrounds.push(new Background(-1400))
     arrayOfBackgrounds.push(new Background(-2100))
-    console.log(arrayOfBackgrounds)
+    arrayOfBackgrounds.push(new Background(-2800))
+    arrayOfBackgrounds.push(new Background(-3500))
 }
 
 const drawBackgrounds = () => {
@@ -74,7 +77,15 @@ const drawBackgrounds = () => {
 
     ctx.drawImage(loadedImages.sky4, arrayOfBackgrounds[3].x, arrayOfBackgrounds[3].y, 
     arrayOfBackgrounds[3].width, arrayOfBackgrounds[3].height)
-    arrayOfBackgrounds[3].updatePosition()        
+    arrayOfBackgrounds[3].updatePosition()
+    
+    ctx.drawImage(loadedImages.sky5, arrayOfBackgrounds[4].x, arrayOfBackgrounds[4].y, 
+    arrayOfBackgrounds[4].width, arrayOfBackgrounds[4].height)
+    arrayOfBackgrounds[4].updatePosition()
+
+    ctx.drawImage(loadedImages.sky6, arrayOfBackgrounds[5].x, arrayOfBackgrounds[5].y, 
+    arrayOfBackgrounds[5].width, arrayOfBackgrounds[5].height)
+    arrayOfBackgrounds[5].updatePosition()
 }
 
 const startGame = () => {

@@ -4,7 +4,7 @@ class Background {
         this.y = y
         this.width = 700
         this.height = 700
-        this.speedY = 0.5
+        this.speedY = 0.1
     }
 
     updatePosition(){
