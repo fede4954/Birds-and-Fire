@@ -21,6 +21,11 @@ let counterForLoadedImages = 0 //This counter keeps track of the images loaded
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
 
+//Game over font
+ctx.font = "30px Comic Sans MS"
+ctx.fillStyle = "red"
+ctx.textAlign = "center"
+
 //Backgrounds
 let arrayOfBackgrounds = [] //Array that holds all backgrounds
 
@@ -63,28 +68,22 @@ const createBackgrounds = () => {
 }
 
 const drawBackgrounds = () => {
-    ctx.drawImage(loadedImages.sky1, arrayOfBackgrounds[0].x, arrayOfBackgrounds[0].y, 
-    arrayOfBackgrounds[0].width, arrayOfBackgrounds[0].height)
+    ctx.drawImage(loadedImages.sky1, 0, arrayOfBackgrounds[0].y, 700, 700)
     arrayOfBackgrounds[0].updatePosition()
 
-    ctx.drawImage(loadedImages.sky2, arrayOfBackgrounds[1].x, arrayOfBackgrounds[1].y, 
-    arrayOfBackgrounds[1].width, arrayOfBackgrounds[1].height)
+    ctx.drawImage(loadedImages.sky2, 0, arrayOfBackgrounds[1].y, 700, 700)
     arrayOfBackgrounds[1].updatePosition()
 
-    ctx.drawImage(loadedImages.sky3, arrayOfBackgrounds[2].x, arrayOfBackgrounds[2].y, 
-    arrayOfBackgrounds[2].width, arrayOfBackgrounds[2].height)
+    ctx.drawImage(loadedImages.sky3, 0, arrayOfBackgrounds[2].y, 700, 700)
     arrayOfBackgrounds[2].updatePosition()
 
-    ctx.drawImage(loadedImages.sky4, arrayOfBackgrounds[3].x, arrayOfBackgrounds[3].y, 
-    arrayOfBackgrounds[3].width, arrayOfBackgrounds[3].height)
+    ctx.drawImage(loadedImages.sky4, 0, arrayOfBackgrounds[3].y, 700, 700)
     arrayOfBackgrounds[3].updatePosition()
     
-    ctx.drawImage(loadedImages.sky5, arrayOfBackgrounds[4].x, arrayOfBackgrounds[4].y, 
-    arrayOfBackgrounds[4].width, arrayOfBackgrounds[4].height)
+    ctx.drawImage(loadedImages.sky5, 0, arrayOfBackgrounds[4].y, 700, 700)
     arrayOfBackgrounds[4].updatePosition()
 
-    ctx.drawImage(loadedImages.sky6, arrayOfBackgrounds[5].x, arrayOfBackgrounds[5].y, 
-    arrayOfBackgrounds[5].width, arrayOfBackgrounds[5].height)
+    ctx.drawImage(loadedImages.sky6, 0, arrayOfBackgrounds[5].y, 700, 700)
     arrayOfBackgrounds[5].updatePosition()
 }
 
@@ -160,6 +159,7 @@ const updateCanvas = () => {
         if(player.hit === true){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
             ctx.fillRect(0, 0, 700, 700)
+            ctx.fillText("YOU DIED", canvas.width/2, canvas.height/2)
         } 
         else myReq = requestAnimationFrame(updateCanvas)
     }
