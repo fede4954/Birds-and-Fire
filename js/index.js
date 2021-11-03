@@ -41,6 +41,13 @@ let myReq = null //Variable to end the animation frame
 
 
 
+//SOUNDS
+const deathSound = new Audio('../sounds/death.mp3')
+
+
+
+
+
 //FUNCTIONS
 const loadImages = () => {
     imageLinks.forEach((image) => { //Iterate over every img in the array
@@ -108,7 +115,7 @@ const checkCollision = (arr1, arr2) => { //This function checks the collision be
                 item1.y + item1.height < item2.y)){
                     item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
                     item2.hit = true //and the fireball (item2) aswell
-                    if(item1.name === 'seagulls') score += 30 //If the entity hit is a seagull, up the score
+                    if(item1.name === 'seagulls') score += 33 //If the entity hit is a seagull, up the score
                     if(item1.name === 'dragon') item1.hit = true //Entity hit is the player
                 }
         })
@@ -139,7 +146,11 @@ const filterAllEntities = () => { //Filter all the entities flagged as hit
     arrayOfEggs = filterEntities(arrayOfEggs)
 }
 
-
+const displayScore = () => {
+    ctx.font = '25px Alagard'
+    ctx.fillStyle = 'white'
+    ctx.fillText(`Score: ${score}`, 570, 685)
+}
 
 
 
@@ -151,8 +162,12 @@ const updateCanvas = () => {
         drawAllEntities()
         checkAllCollisions()
         filterAllEntities()
+        displayScore()
         if(player.hit === true){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
+            // deathSound.currentTime = 0 //Restarts the audio
+            deathSound.play()
+            ctx.fillStyle = 'black'
             ctx.fillRect(0, 0, 700, 700)
             ctx.font = '100px Alagard'
             ctx.fillStyle = 'red'

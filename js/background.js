@@ -10,6 +10,6 @@ class Background {
     }
 
     reposition(){
-        if(this.y === 700) this.y = -2100
+        if(this.y === 700) this.y = -3500
     }
 }

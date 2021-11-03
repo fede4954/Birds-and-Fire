@@ -13,7 +13,7 @@
 
 /* Font for all the game */
 * {
-    font-family: Alagard;
+    font-family: Alagard, Verdana, sans-serif;
 }
 
 .game {
