@@ -21,11 +21,6 @@ let counterForLoadedImages = 0 //This counter keeps track of the images loaded
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
 
-//Game over font
-ctx.font = "30px Comic Sans MS"
-ctx.fillStyle = "red"
-ctx.textAlign = "center"
-
 //Backgrounds
 let arrayOfBackgrounds = [] //Array that holds all backgrounds
 
@@ -159,7 +154,13 @@ const updateCanvas = () => {
         if(player.hit === true){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
             ctx.fillRect(0, 0, 700, 700)
-            ctx.fillText("YOU DIED", canvas.width/2, canvas.height/2)
+            ctx.font = '100px Alagard'
+            ctx.fillStyle = 'red'
+            ctx.textAlign = 'center'
+            ctx.fillText('YOU DIED', 350, 350)
+            ctx.font = '50px Alagard'
+            ctx.fillStyle = 'white'
+            ctx.fillText(`Score: ${score}`, 350, 450)
         } 
         else myReq = requestAnimationFrame(updateCanvas)
     }

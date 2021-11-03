@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Alagard';
+    src: url('Alagard.eot');
+    src: url('Alagard.eot?#iefix') format('embedded-opentype'),
+        url('Alagard.woff2') format('woff2'),
+        url('Alagard.woff') format('woff'),
+        url('Alagard.ttf') format('truetype'),
+        url('Alagard.svg#Alagard') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font for all the game */
+* {
+    font-family: Alagard;
+}
+
+.game {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
