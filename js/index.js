@@ -21,10 +21,13 @@ const ctx = canvas.getContext('2d')
 
 //Player variables
 const player = new Dragon()
+let playerArray = []
+playerArray.push(player) //Put the player in an array to be able to utilize the check collision function with it
 let score = 0
 let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
 let arrayOfSeagulls = [] //Holds the seagulls
 let arrayOfEggs = [] //Holds the seagulls' projectiles (eggs)
+let myReq = null //Variable to end the animation frame
 
 
 
@@ -71,7 +74,8 @@ const checkCollision = (arr1, arr2) => { //This function checks the collision be
                 item1.y + item1.height < item2.y)){
                     item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
                     item2.hit = true //and the fireball (item2) aswell
-                    if(item1.name === 'seagulls') score += 30 //If the item hit is a seagull, up the score
+                    if(item1.name === 'seagulls') score += 30 //If the entity hit is a seagull, up the score
+                    if(item1.name === 'dragon') item1.hit = true //Entity hit is the player
                 }
         })
     })
@@ -92,6 +96,7 @@ const drawAllEntities = () => { //Draws all entities except the player's dragon
 const checkAllCollisions = () => { //Checks all the collisions
     checkCollision(arrayOfSeagulls, arrayOfFireballs)
     checkCollision(arrayOfEggs, arrayOfFireballs)
+    checkCollision(playerArray, arrayOfEggs)
 }
 
 const filterAllEntities = () => { //Filter all the entities flagged as hit
@@ -112,7 +117,11 @@ const updateCanvas = () => {
         drawAllEntities()
         checkAllCollisions()
         filterAllEntities()
-        requestAnimationFrame(updateCanvas)
+        if(player.hit === true){ //If the dragon was hit end the game
+            cancelAnimationFrame(myReq)
+            ctx.fillRect(0, 0, 700, 700)
+        } 
+        else myReq = requestAnimationFrame(updateCanvas)
     }
 }
 
@@ -137,7 +146,6 @@ window.onload = () => {
             const egg = new Egg(randomSeagulls.x + 36, randomSeagulls.y) //Create new egg using random seagulls' pos
             arrayOfEggs.push(egg)
         }, 250) //This interval generates a new egg to be shot from random seagulls every half a second
-
 
     }
 
