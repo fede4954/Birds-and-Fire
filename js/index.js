@@ -3,9 +3,9 @@ const loadedImages = {}
 
 const imageLinks = [
     { link: './images/dragon.gif', name: 'player' },
-    // { link: './images/skies/sky1.png', name: 'sky1' },
-    // { link: './images/skies/sky2.png', name: 'sky2' },
-    // { link: './images/skies/sky3.png', name: 'sky3' },
+    { link: './images/skies/sky1.png', name: 'sky1' },
+    { link: './images/skies/sky2.png', name: 'sky2' },
+    { link: './images/skies/sky3.png', name: 'sky3' },
     { link: './images/skies/sky4.png', name: 'sky4' },
     { link: './images/fireball.png', name: 'fireball' },
     { link: './images/egg.png', name: 'egg'},
@@ -19,14 +19,20 @@ let counterForLoadedImages = 0 //This counter keeps track of the images loaded
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
 
+//Backgrounds
+let arrayOfBackgrounds = [] //Array that holds all backgrounds
+
 //Player variables
 const player = new Dragon()
 let playerArray = []
 playerArray.push(player) //Put the player in an array to be able to utilize the check collision function with it
 let score = 0
-let arrayOfFireballs = [] //Array that holds all the fireballs shot by the player
+let arrayOfFireballs = [] //Holds all the fireballs shot by the player
+
+//Enemy variables
 let arrayOfSeagulls = [] //Holds the seagulls
 let arrayOfEggs = [] //Holds the seagulls' projectiles (eggs)
+
 let myReq = null //Variable to end the animation frame
 
 
@@ -45,12 +51,35 @@ const loadImages = () => {
     })
 }
 
-const startGame = () => {
-    updateCanvas() //Update canvas when start button is pressed
+const createBackgrounds = () => {
+    arrayOfBackgrounds.push(new Background(0))
+    arrayOfBackgrounds.push(new Background(-700))
+    arrayOfBackgrounds.push(new Background(-1400))
+    arrayOfBackgrounds.push(new Background(-2100))
+    console.log(arrayOfBackgrounds)
 }
 
-const drawSky = () => {
-    ctx.drawImage(loadedImages.sky4, 0, 0, 700, 700)
+const drawBackgrounds = () => {
+    ctx.drawImage(loadedImages.sky1, arrayOfBackgrounds[0].x, arrayOfBackgrounds[0].y, 
+    arrayOfBackgrounds[0].width, arrayOfBackgrounds[0].height)
+    arrayOfBackgrounds[0].updatePosition()
+
+    ctx.drawImage(loadedImages.sky2, arrayOfBackgrounds[1].x, arrayOfBackgrounds[1].y, 
+    arrayOfBackgrounds[1].width, arrayOfBackgrounds[1].height)
+    arrayOfBackgrounds[1].updatePosition()
+
+    ctx.drawImage(loadedImages.sky3, arrayOfBackgrounds[2].x, arrayOfBackgrounds[2].y, 
+    arrayOfBackgrounds[2].width, arrayOfBackgrounds[2].height)
+    arrayOfBackgrounds[2].updatePosition()
+
+    ctx.drawImage(loadedImages.sky4, arrayOfBackgrounds[3].x, arrayOfBackgrounds[3].y, 
+    arrayOfBackgrounds[3].width, arrayOfBackgrounds[3].height)
+    arrayOfBackgrounds[3].updatePosition()        
+}
+
+const startGame = () => {
+    createBackgrounds() //Creates backgrounds when start button is pressed
+    updateCanvas() //Updates
 }
 
 const drawDragon = () => {
@@ -112,7 +141,7 @@ const filterAllEntities = () => { //Filter all the entities flagged as hit
 //INFINITE GAME LOOP
 const updateCanvas = () => {
     if(counterForLoadedImages === imageLinks.length){ //Only update canvas once all images are loaded
-        drawSky()
+        drawBackgrounds()
         drawDragon()
         drawAllEntities()
         checkAllCollisions()
@@ -139,13 +168,13 @@ window.onload = () => {
 
         const createSeagulls = setInterval(() => {
             arrayOfSeagulls.push(new Seagulls())
-          }, 500) //Create new seagulls every second
+          }, 500) //Create new seagulls every half a second
 
         const generateEggs = setInterval(() => {
             let randomSeagulls = arrayOfSeagulls[Math.floor(Math.random() * arrayOfSeagulls.length)]
             const egg = new Egg(randomSeagulls.x + 36, randomSeagulls.y) //Create new egg using random seagulls' pos
             arrayOfEggs.push(egg)
-        }, 250) //This interval generates a new egg to be shot from random seagulls every half a second
+        }, 250) //This interval generates a new egg to be shot from random seagulls every quarter of a second
 
     }
 
