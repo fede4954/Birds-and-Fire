@@ -42,6 +42,11 @@ let myReq = null //Variable to end the animation frame
 
 
 //SOUNDS
+const menuTheme = new Audio('../sounds/menu.mp3')
+menuTheme.preload = 'auto'
+menuTheme.load()
+
+const combatTheme = new Audio('../sounds/combat.mp3')
 const deathSound = new Audio('../sounds/death.mp3')
 
 
@@ -58,6 +63,30 @@ const loadImages = () => {
             loadedImages[image.name] = img
         }
     })
+}
+
+let timer = undefined
+
+const drawStartScreen = () => {
+    const startScreen = new Image() //Menu image has to be loaded separately for some reason
+    startScreen.src = './images/menu.png'
+    startScreen.onload = () => {
+        ctx.drawImage(startScreen, 0, 0, 700, 700)
+        ctx.font = '50px Alagard'
+        ctx.fillStyle = 'white'
+        ctx.textAlign = 'center'
+        let count = 0
+        timer = setInterval(() => { //Interval for blinking start game text
+            count++
+            if( count%2 == 1) {
+                ctx.fillText('PRESS START GAME', 350, 650)
+            }
+            else {
+                ctx.drawImage(startScreen, 0, 0, 700, 700)
+            }
+            if( count == 0) clearInterval(timer)
+        },1000)
+    }
 }
 
 const createBackgrounds = () => {
@@ -90,6 +119,8 @@ const drawBackgrounds = () => {
 }
 
 const startGame = () => {
+    menuTheme.pause()
+    combatTheme.play()
     createBackgrounds() //Creates backgrounds when start button is pressed
     updateCanvas() //Updates
 }
@@ -116,7 +147,6 @@ const checkCollision = (arr1, arr2) => { //This function checks the collision be
                     item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
                     item2.hit = true //and the fireball (item2) aswell
                     if(item1.name === 'seagulls') score += 33 //If the entity hit is a seagull, up the score
-                    if(item1.name === 'dragon') item1.hit = true //Entity hit is the player
                 }
         })
     })
@@ -137,7 +167,8 @@ const drawAllEntities = () => { //Draws all entities except the player's dragon
 const checkAllCollisions = () => { //Checks all the collisions
     checkCollision(arrayOfSeagulls, arrayOfFireballs)
     checkCollision(arrayOfEggs, arrayOfFireballs)
-    checkCollision(playerArray, arrayOfEggs)
+    checkCollision(arrayOfEggs, playerArray)
+    
 }
 
 const filterAllEntities = () => { //Filter all the entities flagged as hit
@@ -149,8 +180,11 @@ const filterAllEntities = () => { //Filter all the entities flagged as hit
 const displayScore = () => {
     ctx.font = '25px Alagard'
     ctx.fillStyle = 'white'
+    ctx.textAlign = 'start'
     ctx.fillText(`Score: ${score}`, 570, 685)
 }
+
+
 
 
 
@@ -166,6 +200,7 @@ const updateCanvas = () => {
         if(player.hit === true){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
             // deathSound.currentTime = 0 //Restarts the audio
+            clearInterval(timer)
             deathSound.play()
             ctx.fillStyle = 'black'
             ctx.fillRect(0, 0, 700, 700)
@@ -187,7 +222,9 @@ const updateCanvas = () => {
 
 //window onload -> eventListeners
 window.onload = () => {
+    menuTheme.play()
     loadImages()
+    drawStartScreen()
 
     // Start game button
     document.getElementById('start-game').onclick = () => {
@@ -230,7 +267,7 @@ window.onload = () => {
     })
 
     //Shooting
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener('keydown', (event) => {
         if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 53.25, player.y - 20)) //Pos from the dragon's mouth
     })
 }

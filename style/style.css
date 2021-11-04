@@ -14,10 +14,32 @@
 /* Font for all the game */
 * {
     font-family: Alagard, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.game {
+body {
+    background-color: black;
+}
+
+.container {
     display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+}
+
+#game {
+    border: 2px white solid;
+}
+
+.left {
+    display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
