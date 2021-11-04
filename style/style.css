@@ -18,8 +18,12 @@
     padding: 0;
 }
 
-body {
+.black-bg {
     background-color: black;
+}
+
+.white-text {
+    color: white;
 }
 
 .container {
@@ -30,16 +34,44 @@ body {
 
 #game {
     border: 2px white solid;
+    margin-top: 12px;
 }
 
 .left {
     display: flex;
 	flex-direction: column;
 	justify-content: center;
+    text-align: center;
+    width: 230px;
+    margin-right: 20px;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+button {
+    border: 1px white solid;
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px 10px;
+    width: 210px;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
 }
 
 .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    width: 230px;
+    margin-left: 20px;
+    
+}
+
+p {
+    margin-left: 12px;
 }

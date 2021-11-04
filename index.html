@@ -7,25 +7,29 @@
     <title>Document</title>
     <link rel="stylesheet" href="./style/style.css">
 </head>
-<body>
+<body class="black-bg">
 
     <div class="container">
 
-        <div class="left">
-
-            <button type="button" id="start-game">START GAME</button>
-            <button type="button" id="credits">CREDITS</button>
-            <!-- instructions -->
+        <div class="left white-text">
+            <div>
+                <h1>Roasted <br> Seagulls</h1>
+                <button type="button" id="start-game" class="black-bg white-text">START GAME</button>
+                <button type="button" id="credits" class="black-bg white-text">CREDITS</button>
+            </div>
+            
+           
         </div>
         
         <div class="canvas">
             <canvas id="game" width="700" height="700"></canvas>
         </div>
     
-        <div class="right">
-            <div class="buttons">
-                <!-- <button type="button" id="sound">SOUNDS</button> -->
-                <button type="button" id="music">MUSIC OFF</button>
+        <div class="right white-text">
+            <div>
+                <!-- <button type="button" id="sound">SOUND OFF</button> -->
+                <button type="button" id="music" class="white-text black-bg">MUSIC OFF</button>
+                <p>Move using the arrow keys, use Q to shoot. A single egg will be enough to kill you.</p>
             </div>
         </div>
 
