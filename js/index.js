@@ -124,6 +124,12 @@ const drawBackgrounds = () => {
 }
 
 const startGame = () => {
+    onMenuScreen = false
+    isGameStarted = true
+    if(musicOn){
+        menuTheme.pause()
+        combatTheme.play()
+    }
     createBackgrounds() //Creates backgrounds when start button is pressed
     updateCanvas() //Updates
 }
@@ -200,9 +206,8 @@ const updateCanvas = () => {
         checkAllCollisions()
         filterAllEntities()
         displayScore()
-        if(player.hit === true){ //If the dragon was hit end the game
+        if(player.hit){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
-            // deathSound.currentTime = 0 //Restarts the audio
             clearInterval(timer)
             combatTheme.pause()
             deathSound.play()
@@ -277,7 +282,27 @@ window.onload = () => {
     //Sound and music buttons
     const musicButton = document.getElementById('music')
     musicButton.onclick = () => {
-        
+        if(!musicOn){ 
+            musicOn = true
+            musicButton.innerText = 'MUSIC ON'
+            if(onMenuScreen){
+                menuTheme.play()
+            }
+            else if(isGameStarted){
+                combatTheme.play() //Resume combat theme if audio was off after start game was pressed
+            } 
+        }
+        else{
+            musicOn = false
+            musicButton.innerText = 'MUSIC OFF'
+            if(onMenuScreen){
+                menuTheme.pause()
+                menuTheme.currentTime = 0 //Reset theme after pausing it for next play
+            }
+            else if(isGameStarted){
+                combatTheme.pause()
+            }
+        }
     }
 
     // const soundButton = document.getElementById('sound')
