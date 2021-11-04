@@ -209,8 +209,12 @@ const updateCanvas = () => {
         if(player.hit){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
             clearInterval(timer)
-            combatTheme.pause()
-            deathSound.play()
+            if(musicOn){
+                isGameStarted = false //Prevents combat theme from being played if the user starts clicking on and off
+                isGameOver = true
+                combatTheme.pause()   //in death screen
+                deathSound.play()
+            }
             ctx.fillStyle = 'black'
             ctx.fillRect(0, 0, 700, 700)
             ctx.font = '100px Alagard'
@@ -301,6 +305,10 @@ window.onload = () => {
             }
             else if(isGameStarted){
                 combatTheme.pause()
+            }
+            else if(isGameOver){
+                deathSound.pause()
+                deathSound.currentTime = 0 //Fully stop death sound if user turns music off on death screen
             }
         }
     }
