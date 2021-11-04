@@ -209,9 +209,9 @@ const updateCanvas = () => {
         if(player.hit){ //If the dragon was hit end the game
             cancelAnimationFrame(myReq)
             clearInterval(timer)
+            isGameStarted = false //Prevents combat theme from being played if the user starts clicking on and off
+            isGameOver = true
             if(musicOn){
-                isGameStarted = false //Prevents combat theme from being played if the user starts clicking on and off
-                isGameOver = true
                 combatTheme.pause()   //in death screen
                 deathSound.play()
             }
