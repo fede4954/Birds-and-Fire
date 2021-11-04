@@ -35,6 +35,7 @@ let arrayOfFireballs = [] //Holds all the fireballs shot by the player
 let arrayOfSeagulls = [] //Holds the seagulls
 let arrayOfEggs = [] //Holds the seagulls' projectiles (eggs)
 
+let timer = undefined //Variable for the press start game blinking text interval
 let myReq = null //Variable to end the animation frame
 
 
@@ -42,15 +43,23 @@ let myReq = null //Variable to end the animation frame
 
 
 //SOUNDS
-
+const menuTheme = new Audio('sounds/menu.mp3')
+// menuTheme.preload = 'auto'
+// menuTheme.load()
 
 const combatTheme = new Audio('sounds/combat.mp3')
 const deathSound = new Audio('sounds/death.mp3')
 
+//Music and sound buttons' variables
+let musicOn = false
+let onMenuScreen = true
+let isGameStarted = false
+let isGameOver = false
 
 
 
 
+ 
 //FUNCTIONS
 const loadImages = () => {
     imageLinks.forEach((image) => { //Iterate over every img in the array
@@ -62,8 +71,6 @@ const loadImages = () => {
         }
     })
 }
-
-let timer = undefined
 
 const drawStartScreen = () => {
     const startScreen = new Image() //Menu image has to be loaded separately for some reason
@@ -117,8 +124,6 @@ const drawBackgrounds = () => {
 }
 
 const startGame = () => {
-    menuTheme.pause()
-    combatTheme.play()
     createBackgrounds() //Creates backgrounds when start button is pressed
     updateCanvas() //Updates
 }
@@ -199,6 +204,7 @@ const updateCanvas = () => {
             cancelAnimationFrame(myReq)
             // deathSound.currentTime = 0 //Restarts the audio
             clearInterval(timer)
+            combatTheme.pause()
             deathSound.play()
             ctx.fillStyle = 'black'
             ctx.fillRect(0, 0, 700, 700)
@@ -220,10 +226,6 @@ const updateCanvas = () => {
 
 //window onload -> eventListeners
 window.onload = () => {
-    const menuTheme = new Audio('sounds/menu.mp3')
-    menuTheme.preload = 'auto'
-    menuTheme.load()
-    menuTheme.play()
     loadImages()
     drawStartScreen()
 
@@ -244,7 +246,7 @@ window.onload = () => {
     }
 
     //Dragon movement
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener('keydown', (event) => {
         //Horizontal movement
         if (event.key === 'ArrowRight') {
             player.speedX = 3
@@ -271,4 +273,12 @@ window.onload = () => {
     document.addEventListener('keydown', (event) => {
         if (event.key === 'q') arrayOfFireballs.push(new Fireball(player.x + 53.25, player.y - 20)) //Pos from the dragon's mouth
     })
+
+    //Sound and music buttons
+    const musicButton = document.getElementById('music')
+    musicButton.onclick = () => {
+        
+    }
+
+    // const soundButton = document.getElementById('sound')
 }
