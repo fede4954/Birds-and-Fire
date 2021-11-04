@@ -42,9 +42,7 @@ let myReq = null //Variable to end the animation frame
 
 
 //SOUNDS
-const menuTheme = new Audio('sounds/menu.mp3')
-menuTheme.preload = 'auto'
-menuTheme.load()
+
 
 const combatTheme = new Audio('sounds/combat.mp3')
 const deathSound = new Audio('sounds/death.mp3')
@@ -222,6 +220,9 @@ const updateCanvas = () => {
 
 //window onload -> eventListeners
 window.onload = () => {
+    const menuTheme = new Audio('sounds/menu.mp3')
+    menuTheme.preload = 'auto'
+    menuTheme.load()
     menuTheme.play()
     loadImages()
     drawStartScreen()
