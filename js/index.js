@@ -132,7 +132,9 @@ const startGame = () => {
     isGameStarted = true
     if(musicOn){
         menuTheme.pause()
-        combatTheme.play()
+        deathSound.pause()
+        deathSound.currentTime = 0 //In case death sound is playing when you restart, pauses and resets it
+        combatTheme.play()        //to not overlap combat theme
     }
     createBackgrounds() //Creates backgrounds when start button is pressed
     updateCanvas() //Updates

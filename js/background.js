@@ -1,7 +1,7 @@
 class Background {
     constructor(y){
         this.y = y
-        this.speedY = 0.15
+        this.speedY = 0.3
     }
 
     updatePosition(){
