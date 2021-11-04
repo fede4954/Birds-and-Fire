@@ -37,6 +37,10 @@ let arrayOfEggs = [] //Holds the seagulls' projectiles (eggs)
 
 let timer = undefined //Variable for the press start game blinking text interval
 let myReq = null //Variable to end the animation frame
+const startGameButton = document.getElementById('start-game') //Start game button is needed on global for restart to work
+
+let spawnSeagulls = undefined //Variables for seagull and egg spawning intervals
+let generateEggs = undefined
 
 
 
@@ -193,13 +197,31 @@ const displayScore = () => {
     ctx.fillText(`Score: ${score}`, 570, 685)
 }
 
+const variableClear = () => { //Clears and resets all relevant variables to be able to restart the game
+    player.x = 284.75 //Put dragon in starter pos and make hit false for restart
+    player.y = 605.5
+    player.hit = false
+    score = 0
+    
+    arrayOfFireballs = [] 
+    arrayOfSeagulls = [] 
+    arrayOfEggs = [] 
 
+    timer = undefined 
+    myReq = null
+
+    clearInterval(spawnSeagulls)
+    clearInterval(generateEggs)
+
+    combatTheme.currentTime = 0 //Combat theme should begin again when restarting
+}
 
 
 
 //INFINITE GAME LOOP
 const updateCanvas = () => {
     if(counterForLoadedImages === imageLinks.length){ //Only update canvas once all images are loaded
+        ctx.clearRect(0, 0, 700, 700) //Clear canvas every frame before drawing
         drawBackgrounds()
         drawDragon()
         drawAllEntities()
@@ -211,6 +233,7 @@ const updateCanvas = () => {
             clearInterval(timer)
             isGameStarted = false //Prevents combat theme from being played if the user starts clicking on and off
             isGameOver = true
+            startGameButton.innerText = 'RESTART GAME'
             if(musicOn){
                 combatTheme.pause()   //in death screen
                 deathSound.play()
@@ -224,6 +247,7 @@ const updateCanvas = () => {
             ctx.font = '50px Alagard'
             ctx.fillStyle = 'white'
             ctx.fillText(`Score: ${score}`, 350, 450)
+            variableClear() 
         } 
         else myReq = requestAnimationFrame(updateCanvas)
     }
@@ -232,21 +256,20 @@ const updateCanvas = () => {
 
 
 
-
 //window onload -> eventListeners
 window.onload = () => {
     loadImages()
     drawStartScreen()
-
-    // Start game button
-    document.getElementById('start-game').onclick = () => {
+    
+    // Start
+    startGameButton.onclick = () => {
         startGame()
 
-        const createSeagulls = setInterval(() => {
+        spawnSeagulls = setInterval(() => {
             arrayOfSeagulls.push(new Seagulls())
           }, 500) //Create new seagulls every half a second
 
-        const generateEggs = setInterval(() => {
+        generateEggs = setInterval(() => {
             let randomSeagulls = arrayOfSeagulls[Math.floor(Math.random() * arrayOfSeagulls.length)]
             const egg = new Egg(randomSeagulls.x + 36, randomSeagulls.y) //Create new egg using random seagulls' pos
             arrayOfEggs.push(egg)
@@ -301,7 +324,6 @@ window.onload = () => {
             musicButton.innerText = 'MUSIC OFF'
             if(onMenuScreen){
                 menuTheme.pause()
-                menuTheme.currentTime = 0 //Reset theme after pausing it for next play
             }
             else if(isGameStarted){
                 combatTheme.pause()
