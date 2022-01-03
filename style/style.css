@@ -102,17 +102,20 @@ p {
   max-width: 90%;
   background: #fff;
   padding: 1em 2em;
+  font-size: 1.33em;
 }
 
 .modal__footer {
   text-align: right;
-  a {
-    color: #585858;
-  }
-  i {
-    color: #d02d2c;
-  }
+  margin-top: 1em;
 }
+
+#my-buttons img {
+  height: 62px;
+  width: 60px;
+  object-fit: cover;
+}
+
 .modal__close {
   position: absolute;
   top: 10px;
