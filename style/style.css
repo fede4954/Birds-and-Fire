@@ -123,3 +123,34 @@ p {
   color: #585858;
   text-decoration: none;
 }
+
+@media (max-width: 800px) {                  
+  .left, .canvas, .right{
+     display: none
+  }
+}
+
+@media (min-width: 800px) {
+  .error {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .error {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .error p {
+    padding: 0 5px;
+    margin-top: 5px;
+    font-size: x-large;
+  }
+}
+
+
