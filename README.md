@@ -10,8 +10,8 @@ Move using the arrow keys, use Q to shoot. Being hit by an egg will kill you but
 
 https://fede4954.github.io/Birds-and-Fire/
 
-### 🚨 Bugs and issues 🚨
+### 🚨 Known issues 🚨
 
 - Pressing space after the game has started will cause everything to speed up and break, to prevent this press another button or click somewhere else in the screen.
 
-- Due to time constraints, I couldn't make the game responsive, playing on a small screen like a tablet's or a smartphone's IS NOT advised.
+- The game is blocked for screens smaller than 800 pixels in width, this is done on purpose as it wouldn't work well at all in screens narrower than that.
