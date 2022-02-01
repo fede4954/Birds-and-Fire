@@ -10,7 +10,6 @@
   font-display: swap;
 }
 
-/* Font for all the game */
 * {
   font-family: Alagard, Verdana, sans-serif;
   margin: 0;
@@ -25,15 +24,17 @@
   color: white;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-#game {
-  border: 2px white solid;
-  margin-top: 12px;
+  align-items: center;
+  height: 100%;
 }
 
 .left {
@@ -45,8 +46,25 @@
   margin-right: 20px;
 }
 
+#game {
+  border: 2px white solid;
+  margin-top: 12px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 230px;
+  margin-left: 20px;
+}
+
 h1 {
   font-size: 60px;
+}
+
+p {
+  margin-left: 12px;
 }
 
 button {
@@ -60,18 +78,6 @@ button {
 button:hover {
   background-color: white;
   color: black;
-}
-
-.right {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 230px;
-  margin-left: 20px;
-}
-
-p {
-  margin-left: 12px;
 }
 
 /* Modal */
@@ -124,9 +130,12 @@ p {
   text-decoration: none;
 }
 
-@media (max-width: 800px) {                  
-  .left, .canvas, .right{
-     display: none
+/* Screen is too small error */
+@media (max-width: 800px) {
+  .left,
+  .canvas,
+  .right {
+    display: none;
   }
 }
 
@@ -152,5 +161,3 @@ p {
     font-size: x-large;
   }
 }
-
-
