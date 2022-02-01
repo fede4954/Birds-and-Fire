@@ -15,3 +15,5 @@ https://fede4954.github.io/Birds-and-Fire/
 - Pressing space after the game has started will cause everything to speed up and break, to prevent this press another button or click somewhere else in the screen.
 
 - The game is blocked for screens smaller than 800 pixels in width, this is done on purpose as it wouldn't work well at all in screens narrower than that.
+
+<img src="images/Demo.gif">
