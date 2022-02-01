@@ -155,10 +155,10 @@ const drawEntities = (arr, img) => { //Draws all entities from an array, img ref
 const checkCollision = (arr1, arr2) => { //This function checks the collision between two types of entities 
     arr1.forEach((item1) => { //Ex if array1 is eggs it'd check for every egg if any of the fireballs collide with it
         arr2.forEach((item2) => {
-            if (!(item1.x > item2.x + item2.width || 
-                item1.x + item1.width < item2.x || 
-                item1.y > item2.y + item2.height || 
-                item1.y + item1.height < item2.y)){
+            if (!(item1.x + 16> item2.x + item2.width || 
+                item1.x + item1.width < item2.x - 16 || 
+                item1.y - 32 > item2.y + item2.height || 
+                item1.y + item1.height < item2.y + 32)){
                     item1.hit = true //Following the same example, it'd mark item1 (the egg) as hit
                     item2.hit = true //and the fireball (item2) aswell
                     if(item1.name === 'seagulls') score += 33 //If the entity hit is a seagull, up the score
